@@ -5,17 +5,22 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import dev.hir05o1.viewmodel_lifecycle.ui.counter.CounterView
+import dev.hir05o1.viewmodel_lifecycle.ui.counter.CounterViewModel
 import dev.hir05o1.viewmodel_lifecycle.ui.theme.ViewModelLifecycleTheme
+import kotlin.getValue
 
 class MainActivity : ComponentActivity() {
+    private val counterViewModel: CounterViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i("Lifecycle", "MainActivity - onCreate")
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             ViewModelLifecycleTheme {
-                CounterView()
+                CounterView(viewModel = counterViewModel)
             }
         }
     }
