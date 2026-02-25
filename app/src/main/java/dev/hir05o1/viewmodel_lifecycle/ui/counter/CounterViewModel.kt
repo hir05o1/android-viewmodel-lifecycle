@@ -10,8 +10,6 @@ class CounterViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(CounterUiState())
     val uiState: StateFlow<CounterUiState> = _uiState.asStateFlow()
 
-
-
     init {
         Log.i("Lifecycle-ViewModel", "CounterViewModel - init")
         Log.i("Lifecycle-ViewModel", "CounterViewModel - count: ${uiState.value.count}")

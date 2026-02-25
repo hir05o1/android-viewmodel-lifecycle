@@ -1,6 +1,5 @@
-package dev.hir05o1.viewmodel_lifecycle.ui.home
+package dev.hir05o1.viewmodel_lifecycle.ui.login.screen
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,30 +12,23 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.hir05o1.viewmodel_lifecycle.R
-import dev.hir05o1.viewmodel_lifecycle.ui.theme.ViewModelLifecycleTheme
+import dev.hir05o1.viewmodel_lifecycle.ui.login.LoginViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeView(
+fun LoginStep2Screen(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = viewModel(),
-    navigateToCounter: () -> Unit,
+    navigateToHome: () -> Unit,
     navigateToBack: () -> Unit,
-    navigateToLogin: () -> Unit
+    viewModel: LoginViewModel
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-
     Scaffold(
         modifier = modifier, topBar = {
-            CenterAlignedTopAppBar(title = { Text(text = "ホーム画面") }, navigationIcon = {
+            CenterAlignedTopAppBar(title = { Text(text = "ログインステップ2") }, navigationIcon = {
                 IconButton(
                     onClick = navigateToBack
                 ) {
@@ -50,32 +42,17 @@ fun HomeView(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
-                .background(color = uiState.bgColor),
+                .padding(innerPadding),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Button(
-                onClick = viewModel::updateBgColor
-            ) {
-                Text(text = "背景色を更新")
-            }
-            Button(
-                onClick = navigateToCounter
-            ) {
-                Text(text = "カウンター画面へ遷移")
-            }
-            Button(
-                onClick = navigateToLogin
-            ) {
-                Text(text = "ログイン画面へ遷移")
+                onClick = {
+                    viewModel.completeLogin()
+                    navigateToHome()
+                }) {
+                Text(text = "次の画面へ")
             }
         }
     }
-}
-
-@Composable
-@Preview
-private fun HomeViewPreview() {
-    ViewModelLifecycleTheme { HomeView(navigateToCounter = {}, navigateToBack = {}, navigateToLogin = {}) }
 }
